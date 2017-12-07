@@ -13,5 +13,5 @@ if distro == "arch":
     package_list = pacman.get_installed()
     # for each package in package_list:
     # gather real package name
-    print(package_list)
+    package_list = [ {"id":p['id'], "version":p['version']} for p in package_list]
 # do entity matching here
