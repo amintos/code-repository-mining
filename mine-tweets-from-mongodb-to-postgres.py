@@ -70,8 +70,8 @@ for tweet in mongotweets.find():
         tweet['datetime']
     ))
 
-postgresCursor.execute(createViewStatement1);
-postgresCursor.execute(createViewStatement2);
+#postgresCursor.execute(createViewStatement1);
+#postgresCursor.execute(createViewStatement2);
 
 postgresConnection.commit()
 postgresCursor.close()
