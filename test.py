@@ -2,9 +2,14 @@
 
 import platform
 import requests
-from subprocess import check_output
-from cpe import CPE
-from pprint import pprint
+import config
+import psycopg2
+
+from subprocess    import check_output
+from cpe           import CPE
+from pprint        import pprint
+from pymongo       import MongoClient
+from pkg_resources import parse_version
 
 # check for linux distribution
 distro = platform.linux_distribution()
@@ -31,35 +36,27 @@ elif distro[0] == 'debian':
         "version": pkg.installed.version
       })
 
-package_list = [{
-    "name": "gcc",
-    "version": "7.2.0-3"
-}]
-pkg_cves = dict()
+# TODO: remove test entry here
+package_list.append({
+  "name": "openssl",
+  "version": "1.0.1b"
+})
+
+# set up DB connection
+postgresConnection = psycopg2.connect(dbname=config.postgresql.dbname,
+                                      user=config.postgresql.user,
+                                      password=config.postgresql.password)
+postgresCursor = postgresConnection.cursor()
+#searchCveByProductQuery = "SELECT levenshtein(name,'{0}'), * FROM cve_per_product_version WHERE name ~ '{0}' AND levenshtein(name,'{0}') < 5"
+searchCveByProductQuery = "SELECT * FROM cve_per_product_version WHERE name = '{0}'"
 
 for pkg in package_list:
-  #out = check_output(["/mnt/brick/home/fwolff/cve-search-master/bin/search_fulltext.py", "-q", pkg['name']]).splitlines()
-  out = check_output(["/home/felix/cve-search/bin/search_fulltext.py", "-q", pkg['name']]).splitlines()
-  out = [ o.decode("utf-8") for o in out ]
+  installedVersion = parse_version(pkg["version"])
+  postgresCursor.execute(searchCveByProductQuery.format(pkg["name"]))
 
-  # acquire CVE information from cve-search API for every CVE
-  cve_infos = []
-  for cve in out:
-    cveUrl = "http://127.0.0.1:5000/api/cve/{0}".format(cve)
-    cveJson = requests.get(cveUrl).json()
+  for resultrow in postgresCursor:
+      rowVersion = parse_version(resultrow[2])
+      badVersionInstalled = rowVersion == installedVersion
 
-    if cveJson != None:
-      cve_infos.append(dict(cveJson))
-
-  if len(cve_infos) > 0:
-    print(pkg['name'], "matches these CPEs:")
-
-  # compare CVE critical version numbers with local version number
-  for cve in cve_infos:
-    try:
-      cpe_str = cve["vulnerable_configuration_cpe_2_2"][0]
-      cve_cpe = CPE(cpe_str)
-      print("\t",cve_cpe)
-    except:
-      print("bad cve_cpe")
-      # it can happen that the vulnerable configuration array is empty!
+      if badVersionInstalled:
+        print(pkg["name"], " v", pkg["version"], " could be affected by ",  resultrow[0])
