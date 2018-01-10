@@ -11,6 +11,18 @@ from pprint        import pprint
 from pymongo       import MongoClient
 from pkg_resources import parse_version
 
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
+
 # check for linux distribution
 distro = platform.linux_distribution()
 package_list = []
@@ -52,9 +64,12 @@ postgresConnection = psycopg2.connect(dbname=config.postgresql.dbname,
 postgresCursor = postgresConnection.cursor()
 
 affected_packages = []
-searchCveByProductQuery = "SELECT * FROM cve_per_product_version WHERE name = '{0}'"
+searchCveByProductQuery = "SELECT cveid,name,version FROM cve_per_product_version WHERE name = '{0}'"
+cveInformationQuery     = "SELECT id,cweid,summary,cvss,published FROM cve_per_product_version WHERE id = '{0}'"
 
 for pkg in package_list:
+  print("...processing...", end="\r")
+
   installedVersion = parse_version(pkg["version"])
   postgresCursor.execute(searchCveByProductQuery.format(pkg["name"]))
 
@@ -68,9 +83,26 @@ for pkg in package_list:
 
   if len(package_cves) > 0:
     affected_packages.append({
-      name: pkg["name"],
-      version: pkg["version"],
-      cves: package_cves
+      "name": pkg["name"],
+      "version": pkg["version"],
+      "cves": package_cves
     })
 
     print(pkg["name"], "is affected by", len(package_cves), "known vulnerabilities")
+
+print("DONE")
+print()
+print()
+
+for affected in affected_packages:
+  print(class.BOLD + affected["name"] + class.END)
+  print("As of version" + affected["version"] + ", this package is affected by",
+        len(affected["cves"]), "weaknesses. They are listed in detail below")
+
+  for cve in affected["cves"]:
+    postgresCursor.execute(cveInformationQuery.format(cve))
+    info = postgresCursor.fetchone()
+
+    print(class.RED + info[0] +  class.END + info[4])
+    print(info[2])
+
