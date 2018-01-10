@@ -35,28 +35,42 @@ elif distro[0] == 'debian':
         "name": pkg.name,
         "version": pkg.installed.version
       })
+else:
+  print("Unsupported distribution right here!")
+  # TODO: force exit
 
 # TODO: remove test entry here
-package_list.append({
+package_list = [{
   "name": "openssl",
   "version": "1.0.1b"
-})
+}]
 
 # set up DB connection
 postgresConnection = psycopg2.connect(dbname=config.postgresql.dbname,
                                       user=config.postgresql.user,
                                       password=config.postgresql.password)
 postgresCursor = postgresConnection.cursor()
-#searchCveByProductQuery = "SELECT levenshtein(name,'{0}'), * FROM cve_per_product_version WHERE name ~ '{0}' AND levenshtein(name,'{0}') < 5"
+
+affected_packages = []
 searchCveByProductQuery = "SELECT * FROM cve_per_product_version WHERE name = '{0}'"
 
 for pkg in package_list:
   installedVersion = parse_version(pkg["version"])
   postgresCursor.execute(searchCveByProductQuery.format(pkg["name"]))
 
+  package_cves = []
   for resultrow in postgresCursor:
       rowVersion = parse_version(resultrow[2])
       badVersionInstalled = rowVersion == installedVersion
 
       if badVersionInstalled:
-        print(pkg["name"], " v", pkg["version"], " could be affected by ",  resultrow[0])
+        package_cves.append(resultrow[0])
+
+  if len(package_cves) > 0:
+    affected_packages.append({
+      name: pkg["name"],
+      version: pkg["version"],
+      cves: package_cves
+    })
+
+    print(pkg["name"], "is affected by", len(package_cves), "known vulnerabilities")
