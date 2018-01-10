@@ -5,7 +5,6 @@ import requests
 import config
 import psycopg2
 
-from subprocess    import check_output
 from cpe           import CPE
 from pprint        import pprint
 from pymongo       import MongoClient
@@ -65,7 +64,7 @@ postgresCursor = postgresConnection.cursor()
 
 affected_packages = []
 searchCveByProductQuery = "SELECT cveid,name,version FROM cve_per_product_version WHERE name = '{0}'"
-cveInformationQuery     = "SELECT id,cweid,summary,cvss,published FROM cve_per_product_version WHERE id = '{0}'"
+cveInformationQuery     = "SELECT id,cweid,summary,cvss,published FROM cve WHERE id = '{0}'"
 
 for pkg in package_list:
   print("...processing...", end="\r")
@@ -95,7 +94,7 @@ print()
 print()
 
 for affected in affected_packages:
-  print(class.BOLD + affected["name"] + class.END)
+  print(color.BOLD + affected["name"] + color.END)
   print("As of version" + affected["version"] + ", this package is affected by",
         len(affected["cves"]), "weaknesses. They are listed in detail below")
 
@@ -103,6 +102,7 @@ for affected in affected_packages:
     postgresCursor.execute(cveInformationQuery.format(cve))
     info = postgresCursor.fetchone()
 
-    print(class.RED + info[0] +  class.END + info[4])
+    print(color.RED + info[0] +  color.END, 'released on', info[4].strftime("%A %d. %B %Y"))
     print(info[2])
+    print()
 
