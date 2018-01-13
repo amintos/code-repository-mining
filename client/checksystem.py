@@ -75,6 +75,8 @@ WHERE nrcr.cweid = {0} AND crd.cveid = '{1}'
 ORDER BY refshare DESC
 LIMIT 1"""
 
+bestUserQuery = "SELECT username, t_cwe_count / t_count::float AS rank, t_count FROM view_twitter_user_ranking WHERE cweid = {0} ORDER BY rank DESC LIMIT 1"
+
 for pkg in package_list:
   print("...processing...", end="\r")
 
@@ -122,6 +124,10 @@ for affected in affected_packages:
       if bestReference:
         print("Recommended information source (" + str(round(bestReference[1],3)) + "% of total references for this CWE):", bestReference[0])
 
-    print("An expert on the topic might be: TODO")
-    print()
+      postgresCursor.execute(bestUserQuery.format(info[1]))
+      tweeter = postgresCursor.fetchone()
 
+      if tweeter:
+        print("A knowledgeable Twitter and Github user might be: https://github.com/" + tweeter[0], "-", str(round(tweeter[1],3)), "% of his posts are on this kind of CWE")
+      
+    print()
