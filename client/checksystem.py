@@ -4,6 +4,7 @@ import platform
 import requests
 import config
 import psycopg2
+import sys
 
 from cpe           import CPE
 from pprint        import pprint
@@ -47,8 +48,8 @@ elif distro[0] == 'debian':
         "version": pkg.installed.version
       })
 else:
-  print("Unsupported distribution right here!")
-  # TODO: force exit
+  print("Unsupported distribution right here!", file=sys.stderr)
+  exit(1)
 
 # TODO: remove test entry here
 package_list = [{
@@ -65,6 +66,14 @@ postgresCursor = postgresConnection.cursor()
 affected_packages = []
 searchCveByProductQuery = "SELECT cveid,name,version FROM cve_per_product_version WHERE name = '{0}'"
 cveInformationQuery     = "SELECT id,cweid,summary,cvss,published FROM cve WHERE id = '{0}'"
+
+bestReferenceQuery      = """
+SELECT reference, refshare, nrefs, nrefstotal
+FROM view_nist_reference_cwe_ranking nrcr
+JOIN view_cvereference_extracted_domains crd ON crd.domain = nrcr.domain
+WHERE nrcr.cweid = {0} AND crd.cveid = '{1}'
+ORDER BY refshare DESC
+LIMIT 1"""
 
 for pkg in package_list:
   print("...processing...", end="\r")
@@ -101,8 +110,18 @@ for affected in affected_packages:
   for cve in affected["cves"]:
     postgresCursor.execute(cveInformationQuery.format(cve))
     info = postgresCursor.fetchone()
-
+    
     print(color.RED + info[0] +  color.END, 'released on', info[4].strftime("%A %d. %B %Y"))
     print(info[2])
+    print("Official NIST entry: https://nvd.nist.gov/vuln/detail/" + info[0])
+   
+    if info[1]: # some CVEs do not have an assigned CWE
+      postgresCursor.execute(bestReferenceQuery.format(info[1], cve))
+      bestReference = postgresCursor.fetchone()
+    
+      if bestReference:
+        print("Recommended information source (" + str(round(bestReference[1],3)) + "% of total references for this CWE):", bestReference[0])
+
+    print("An expert on the topic might be: TODO")
     print()
 

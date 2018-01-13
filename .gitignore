@@ -2,3 +2,4 @@ config.py
 __pycache__
 set-credential-environment.sh
 .ipynb_checkpoints/
+*.swp
