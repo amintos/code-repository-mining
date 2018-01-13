@@ -11778,7 +11778,24 @@ div#notebook {
 <h1 id="Analysis-of-Twitter-and-NIST-CVE-references">Analysis of Twitter and NIST CVE references<a class="anchor-link" href="#Analysis-of-Twitter-and-NIST-CVE-references">&#182;</a></h1>
 </div>
 </div>
-</div>
+</div><script>
+  function code_toggle() {
+    if (code_shown){
+      $('div.input').hide('500');
+      $('#toggleButton').val('Show Code')
+    } else {
+      $('div.input').show('500');
+      $('#toggleButton').val('Hide Code')
+    }
+    code_shown = !code_shown
+  }
+
+  $( document ).ready(function(){
+    code_shown=false;
+    $('div.input').hide()
+  });
+</script>
+<form action="javascript:code_toggle()"><input type="submit" id="toggleButton" value="Show Code"></form>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
@@ -11788,6 +11805,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">psycopg2</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">plotly.plotly</span> <span class="k">as</span> <span class="nn">py</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
@@ -11797,13 +11815,27 @@ div#notebook {
 
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
 
-<span class="c1">#plotly.tools.set_credentials_file(username=&#39;flxw&#39;, api_key=&#39;lr1c37zw81&#39;)</span>
+<span class="n">PLOTLY_UN</span>    <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PLOTLY_UN&quot;</span><span class="p">)</span>
+<span class="n">PLOTLY_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PLOTLY_TOKEN&quot;</span><span class="p">)</span>
+<span class="c1">#plotly.tools.set_credentials_file(username=PLOTLY_UN, api_key=PLOTLY_TOKEN)</span>
 
+<span class="n">POSTGRES_DB_NAME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API_TOKEN&quot;</span><span class="p">)</span>
+<span class="n">POSTGRES_DB_UN</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB_UN&quot;</span><span class="p">)</span>
+<span class="n">POSTGRES_DB_PW</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB_PW&quot;</span><span class="p">)</span>
+<span class="n">POSTGRES_DB_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB_HOST&quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">load_ext</span> sql
 <span class="o">%</span><span class="k">config</span> echo=False
-<span class="o">%</span><span class="k">sql</span> postgresql://crm:crm1718@localhost/github
-<span class="n">connection</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="s2">&quot;github&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;crm&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;crm1718&quot;</span><span class="p">);</span>
+<span class="o">%</span><span class="k">sql</span> postgresql://$POSTGRES_DB_UN:$POSTGRES_DB_PW@$POSTGRES_DB_HOST/$POSTGRES_DB_NAME
+<span class="n">connection</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="n">POSTGRES_DB_NAME</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">POSTGRES_DB_UN</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">POSTGRES_DB_PW</span><span class="p">);</span>
 <span class="n">cursor</span>     <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="c1">#connect_to_db = &#39;postgresql+psycopg2://&#39; + \</span>
+                <span class="c1">#creds[&#39;user_name&#39;] + &#39;:&#39; + creds[&#39;password&#39;] + &#39;@&#39; + \</span>
+                <span class="c1">#creds[&#39;host_name&#39;] + &#39;:&#39; + creds[&#39;port_num&#39;] + &#39;/&#39; + creds[&#39;db_name&#39;];</span>
+
+<span class="n">MONGO_DB_NAME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_NAME&quot;</span><span class="p">)</span>
+<span class="n">MONGO_DB_UN</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_UN&quot;</span><span class="p">)</span>
+<span class="n">MONGO_DB_PW</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_PW&quot;</span><span class="p">)</span>
+<span class="n">MONGO_DB_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_HOST&quot;</span><span class="p">)</span>
 
 <span class="c1">#%sql SELECT relname, reltuples FROM pg_class WHERE relname IN (SELECT table_name FROM information_schema.tables WHERE table_schema = &#39;public&#39;) ORDER BY reltuples DESC</span>
 </pre></div>
