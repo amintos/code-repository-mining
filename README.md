@@ -9,6 +9,8 @@ pip install -r requirements.txt
 
 Then, simply scan your system for vulnerable packages via: `./checksystem.py`. Currently, only apt and pacman
 package managers are supported, which translates to most Debian or Arch based Linux distributions.
+To simulate the results that this application could potentially give, run `./checksystem.py --test`.
+It will show results for an OS X installation affected by goto-fail and an openssl package affected by Heartbleed.
 
 ## Server setup
 This setup assumes the GHtorrent database dump at the HPI chair for software architecture.
