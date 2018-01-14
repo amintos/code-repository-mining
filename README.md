@@ -20,7 +20,7 @@ The data procurement and setup is quite tedious:
 3. Run `create-cve-search-view.sql`.  Wait for completion.
 4. Install `scrapy` via `pip install scrapy`
 5. Download my TweetScraper fork https://github.com/flxw/TweetScraper
-6. Configure the TweetScraper via its `settings.py`
+6. Configure the TweetScraper via its `settings.py` to reflect your PostgreSQL settings and have the TweetScraper use it
 7. Run `./crawl-cve-tweets-from-github-subset` *from inside* the TweetScraper project directory. You can go ahead with the next step while the crawler is doing its thing.
 8. Download and setup https://github.com/cve-search/cve-search. Wait for completion here.
 9. Run `mine-cve-search-into-postgres.py`. Wait for completion.
