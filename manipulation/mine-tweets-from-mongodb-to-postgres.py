@@ -3,6 +3,7 @@
 # this script should be run AFTER the tweets have been crawled and
 # thus a TweetScraper collection exists in MongoDB
 
+import config
 import psycopg2
 from pymongo import MongoClient
 
@@ -42,7 +43,9 @@ WITH DATA;
 """
 insertTweetStatement = "INSERT INTO cve_referring_tweets VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
-postgresConnection = psycopg2.connect(dbname="github", user="crm", password="crm1718");
+postgresConnection = psycopg2.connect(dbname=config.postgresql.dbname,
+                                      user=config.postgresql.user,
+                                      password=config.postgresql.password)
 postgresCursor = postgresConnection.cursor()
 
 # set up MongoDB connection
