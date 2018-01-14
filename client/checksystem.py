@@ -67,12 +67,20 @@ json_responses = []
 pbar = tqdm(package_list, unit="package")
 for pkg in pbar:
   pbar.set_description("Processing package {0} {1}".format(pkg["name"], pkg["version"]))
-  json_responses.append(get_and_parse_json(pkg))
+  pkg_info = get_and_parse_json(pkg)
+
+  if len(pkg_info["vulnerabilities"]) > 0:
+    json_responses.append(pkg_info)
 pbar.close()
+
+print("We scanned", len(package_list), "packages for vulnerabilities registered in the NIST database")
+print("Of those packages", len(json_responses), "were affected by known vulnerabilities:")
+for r in json_responses: print(r["name"])
+print("---------------------------------------------------------------------------------------------")
 
 for r in json_responses:
   print("Package", color.BOLD + r["name"] + color.END)
-  print("As of your version" + r["version"] + ", this package is affected by",
+  print("As of your version", r["version"] + ", this package is affected by",
       len(r["vulnerabilities"]), "known weaknesses. They are listed in detail below:")
   print()
 
