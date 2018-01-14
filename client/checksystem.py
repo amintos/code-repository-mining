@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import platform
 import requests
 import sys
+import platformpackages
 import dateutil.parser as timestamp_parser
 from tqdm import tqdm
 
@@ -23,43 +23,20 @@ def get_and_parse_json(pkg):
   r = requests.get(api_url, pkg)
   return r.json()
 
-# check for linux distribution
-distro = platform.linux_distribution()
+# TODO clean this up
 package_list = []
-
-# TODO depending on distro load appropriate package for interfacing
-# with package management mechanism
-if distro[0] == "arch":
-  import pacman
-  package_list = [ {
-    "name":   p['id'],
-    "version":p['version']
-  } for p in pacman.get_installed() ]
-
-elif distro[0] == 'debian':
-  import apt
-  cache = apt.Cache()
-
-  for pkg in apt.Cache():
-    if cache[pkg.name].is_installed:
-      package_list.append({
-        "name":    pkg.name,
-        "version": pkg.installed.version
-      })
+if sys.argv[1] != "--test":
+  package_list = platformpackages.get_package_list()
 else:
-  print("Unsupported distribution right here!", file=sys.stderr)
-  exit(1)
-
-# TODO: remove test entry here
-package_list = [
-{
-  "name": "openssl",
-  "version": "1.0.1b"
-},
-{
-  "name": "mac_os_x",
-  "version": "10.9"
-}]
+  package_list = [
+  {
+    "name": "openssl",
+    "version": "1.0.1b"
+  },
+  {
+    "name": "mac_os_x",
+    "version": "10.9"
+  }]
 
 print("We are analyzing", len(package_list), "packages on your system. This will take some time!", file=sys.stderr)
 
