@@ -11768,6 +11768,7 @@ div#notebook {
     </script>
     <!-- End of mathjax configuration --></head>
 <body>
+  <title>Hello ladies</title>
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
@@ -11798,7 +11799,7 @@ div#notebook {
 <form action="javascript:code_toggle()"><input type="submit" id="toggleButton" value="Show Code"></form>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
@@ -11817,30 +11818,42 @@ div#notebook {
 
 <span class="n">PLOTLY_UN</span>    <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PLOTLY_UN&quot;</span><span class="p">)</span>
 <span class="n">PLOTLY_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PLOTLY_TOKEN&quot;</span><span class="p">)</span>
-<span class="c1">#plotly.tools.set_credentials_file(username=PLOTLY_UN, api_key=PLOTLY_TOKEN)</span>
 
-<span class="n">POSTGRES_DB_NAME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API_TOKEN&quot;</span><span class="p">)</span>
+<span class="n">POSTGRES_DB_NAME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB_NAME&quot;</span><span class="p">)</span>
 <span class="n">POSTGRES_DB_UN</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB_UN&quot;</span><span class="p">)</span>
 <span class="n">POSTGRES_DB_PW</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB_PW&quot;</span><span class="p">)</span>
 <span class="n">POSTGRES_DB_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB_HOST&quot;</span><span class="p">)</span>
+<span class="n">connect_to_db</span> <span class="o">=</span> <span class="s1">&#39;postgresql+psycopg2://&#39;</span> <span class="o">+</span> \
+                <span class="n">POSTGRES_DB_UN</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">POSTGRES_DB_PW</span> <span class="o">+</span> <span class="s1">&#39;@&#39;</span> <span class="o">+</span> \
+                <span class="n">POSTGRES_DB_HOST</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">POSTGRES_DB_NAME</span><span class="p">;</span>
+
 <span class="o">%</span><span class="k">load_ext</span> sql
 <span class="o">%</span><span class="k">config</span> echo=False
-<span class="o">%</span><span class="k">sql</span> postgresql://$POSTGRES_DB_UN:$POSTGRES_DB_PW@$POSTGRES_DB_HOST/$POSTGRES_DB_NAME
+<span class="o">%</span><span class="k">sql</span> $connect_to_db
 <span class="n">connection</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="n">POSTGRES_DB_NAME</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">POSTGRES_DB_UN</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">POSTGRES_DB_PW</span><span class="p">);</span>
 <span class="n">cursor</span>     <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-<span class="c1">#connect_to_db = &#39;postgresql+psycopg2://&#39; + \</span>
-                <span class="c1">#creds[&#39;user_name&#39;] + &#39;:&#39; + creds[&#39;password&#39;] + &#39;@&#39; + \</span>
-                <span class="c1">#creds[&#39;host_name&#39;] + &#39;:&#39; + creds[&#39;port_num&#39;] + &#39;/&#39; + creds[&#39;db_name&#39;];</span>
-
-<span class="n">MONGO_DB_NAME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_NAME&quot;</span><span class="p">)</span>
-<span class="n">MONGO_DB_UN</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_UN&quot;</span><span class="p">)</span>
-<span class="n">MONGO_DB_PW</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_PW&quot;</span><span class="p">)</span>
-<span class="n">MONGO_DB_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MONGO_DB_HOST&quot;</span><span class="p">)</span>
-
-<span class="c1">#%sql SELECT relname, reltuples FROM pg_class WHERE relname IN (SELECT table_name FROM information_schema.tables WHERE table_schema = &#39;public&#39;) ORDER BY reltuples DESC</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The sql extension is already loaded. To reload it, use:
+  %reload_ext sql
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
