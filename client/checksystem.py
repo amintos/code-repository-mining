@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import platform
 import requests
 import sys
+import platformpackages
 import dateutil.parser as timestamp_parser
 from tqdm import tqdm
 
@@ -23,43 +23,20 @@ def get_and_parse_json(pkg):
   r = requests.get(api_url, pkg)
   return r.json()
 
-# check for linux distribution
-distro = platform.linux_distribution()
+# TODO clean this up
 package_list = []
-
-# TODO depending on distro load appropriate package for interfacing
-# with package management mechanism
-if distro[0] == "arch":
-  import pacman
-  package_list = [ {
-    "name":   p['id'],
-    "version":p['version']
-  } for p in pacman.get_installed() ]
-
-elif distro[0] == 'debian':
-  import apt
-  cache = apt.Cache()
-
-  for pkg in apt.Cache():
-    if cache[pkg.name].is_installed:
-      package_list.append({
-        "name":    pkg.name,
-        "version": pkg.installed.version
-      })
+if sys.argv[1] != "--test":
+  package_list = platformpackages.get_package_list()
 else:
-  print("Unsupported distribution right here!", file=sys.stderr)
-  exit(1)
-
-# TODO: remove test entry here
-package_list = [
-{
-  "name": "openssl",
-  "version": "1.0.1b"
-},
-{
-  "name": "mac_os_x",
-  "version": "10.9"
-}]
+  package_list = [
+  {
+    "name": "openssl",
+    "version": "1.0.1b"
+  },
+  {
+    "name": "mac_os_x",
+    "version": "10.9"
+  }]
 
 print("We are analyzing", len(package_list), "packages on your system. This will take some time!", file=sys.stderr)
 
@@ -67,12 +44,20 @@ json_responses = []
 pbar = tqdm(package_list, unit="package")
 for pkg in pbar:
   pbar.set_description("Processing package {0} {1}".format(pkg["name"], pkg["version"]))
-  json_responses.append(get_and_parse_json(pkg))
+  pkg_info = get_and_parse_json(pkg)
+
+  if len(pkg_info["vulnerabilities"]) > 0:
+    json_responses.append(pkg_info)
 pbar.close()
+
+print("We scanned", len(package_list), "packages for vulnerabilities registered in the NIST database")
+print("Of those packages", len(json_responses), "were affected by known vulnerabilities:")
+for r in json_responses: print(r["name"])
+print("---------------------------------------------------------------------------------------------")
 
 for r in json_responses:
   print("Package", color.BOLD + r["name"] + color.END)
-  print("As of your version" + r["version"] + ", this package is affected by",
+  print("As of your version", r["version"] + ", this package is affected by",
       len(r["vulnerabilities"]), "known weaknesses. They are listed in detail below:")
   print()
 
