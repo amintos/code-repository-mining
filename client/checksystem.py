@@ -32,11 +32,8 @@ else:
   {
     "name": "openssl",
     "version": "1.0.1b"
-  },
-  {
-    "name": "mac_os_x",
-    "version": "10.9"
-  }]
+  }
+]
 
 print("We are analyzing", len(package_list), "packages on your system. This will take some time!", file=sys.stderr)
 
@@ -53,7 +50,7 @@ pbar.close()
 print("We scanned", len(package_list), "packages for vulnerabilities registered in the NIST database")
 print("Of those packages", len(json_responses), "were affected by known vulnerabilities:")
 for r in json_responses: print(r["name"])
-print("---------------------------------------------------------------------------------------------")
+print("-------------")
 
 for r in json_responses:
   print("Package", color.BOLD + r["name"] + color.END)
@@ -67,11 +64,11 @@ for r in json_responses:
     print("Official NIST entry: https://nvd.nist.gov/vuln/detail/" + v["cveid"])
 
     if "source_recommendation" in v:
-      print("Recommended information source (" + str(v["source_cwe_share"]) + "% of total references for this CWE):", v["source_recommendation"])
+      print("Recommended information source (" + str(round(v["source_cwe_share"]*100,3)) + "% of total references for this CWE):", v["source_recommendation"])
 
     if "expert_recommendation" in v:
       print("A knowledgeable Twitter and Github user might be: https://github.com/" + v["expert_recommendation"],
-            "- as", str(v["expert_cwe_share"]) + "% of his posts are on this kind of CWE")
+            "- as", str(round(v["expert_cwe_share"]*100,3)) + "% of his posts are on this kind of CWE")
 
     print()
 

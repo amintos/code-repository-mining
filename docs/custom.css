@@ -1,0 +1,14 @@
+div#notebook-container {
+  box-shadow: none !important;
+}
+div#notebook-container h1,
+div#notebook-container h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #28abe2;
+}
+div#notebook-container p {
+  font-family: 'Raleway', sans-serif;
+}
+.prompt {
+  display: none;
+}
