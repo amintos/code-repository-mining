@@ -59,6 +59,19 @@ div#notebook-container{
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:100" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $('.btn').click(function() {
+    $(this).parent().parent().parent().find("div.input").toggle(500)
+  })
+
+  $('div.input').hide()
+})
+</script>
 
 <!-- Loading mathjax macro -->
 {{ mathjax() }}
@@ -68,7 +81,6 @@ div#notebook-container{
 
 {% block body %}
 <body>
-  <title>Hello ladies</title>
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 {{ super() }}

@@ -11744,6 +11744,19 @@ div#notebook {
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:100" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $('.btn').click(function() {
+    $(this).parent().parent().parent().find("div.input").toggle(500)
+  })
+
+  $('div.input').hide()
+})
+</script>
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -11768,7 +11781,6 @@ div#notebook {
     </script>
     <!-- End of mathjax configuration --></head>
 <body>
-  <title>Hello ladies</title>
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
@@ -11798,6 +11810,7 @@ div#notebook {
 </script>
 <form action="javascript:code_toggle()"><input type="submit" id="toggleButton" value="Show Code"></form>
 <div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
@@ -11867,6 +11880,7 @@ div#notebook {
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
@@ -11954,6 +11968,7 @@ div#notebook {
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
@@ -12041,6 +12056,7 @@ div#notebook {
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
@@ -12121,6 +12137,7 @@ div#notebook {
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
@@ -12196,6 +12213,7 @@ div#notebook {
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
@@ -12272,6 +12290,7 @@ div#notebook {
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
