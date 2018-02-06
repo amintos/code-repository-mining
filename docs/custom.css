@@ -12,3 +12,6 @@ div#notebook-container p {
 .prompt {
   display: none;
 }
+twitterwidget {
+  margin: 0 auto;
+}
