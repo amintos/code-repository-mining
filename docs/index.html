@@ -11811,7 +11811,7 @@ The final presentation slides can be found here:</p>
 <div class="cell border-box-sizing code_cell rendered">
 <a class="waves-effect waves-light btn">button</a>
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
@@ -11847,25 +11847,6 @@ The final presentation slides can be found here:</p>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>The sql extension is already loaded. To reload it, use:
-  %reload_ext sql
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -11910,7 +11891,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <h1 id="Data-origins">Data origins<a class="anchor-link" href="#Data-origins">&#182;</a></h1><p>Three datasets from different sources were cobined to create the foundations for the application and analysis presented in this document - all inside a PostgreSQL database:</p>
 <ol>
 <li>A complete <a href="http://ghtorrent.org/">ghtorrent</a> dump</li>
-<li>Tweets referring to CVE-IDs that were also referred to by commits from the above source. To accomplish this, <a href="github.com/flxw/tweetscraper">TweetScraper</a> was forked and extended with PostgreSQL saving capabilities.</li>
+<li>Tweets referring to CVE-IDs that were also referred to by commits from the above source. To accomplish this, <a href="github.com/flxw/tweetscraper">TweetScraper</a> was forked and extended with a PostgreSQL backend option.</li>
 <li>An extraction of relevant data via ETL from the <a href="github.com/cve-search/cve-search">cve-search</a> project.</li>
 </ol>
 <p>The different tables and their origin are denoted below (views in <em>italic</em>):</p>
@@ -11975,7 +11956,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <li>The user uses the same name in both GitHub and Twitter.</li>
 <li>The user has tweeted about the same CWE as the current CVE in question. (I.e. he knows this type of vulnerability)</li>
 </ol>
-<p>An important assumption here that identical usernames belong to the same person. In a sampling test, this held true for the following users:</p>
+<p>The following paragraphs explain the analysis and reasoning behind these criteria. An important assumption here is that identical usernames belong to the same person. Testing a small sample, this held true for the following users:</p>
 <ul>
 <li>zisk0 - <a href="https://twitter.com/zisk0">Twitter</a> - <a href="https://github.com/zisk0">GitHub</a></li>
 <li>nahi - <a href="https://twitter.com/nahi">Twitter</a> - <a href="https://github.com/nahi">GitHub</a></li>
@@ -12065,7 +12046,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Not only is the number of Tweets increasing every year, but also do some users appear to be knowledgeable in certain areas. This becomes apprarent when plotting their share of the total number of tweets for a given CWE against the individual CWE IDs and usernames. The graph below shows a selection of users who have contributed more than 10% to the total number of tweets:</p>
+<p>Not only is the number of Tweets increasing every year, but also do some users appear to be knowledgeable in certain areas. This becomes apparent when plotting their share of the total number of tweets for a given CWE against the individual CWE IDs and usernames. The graph below shows a selection of users who have contributed more than 10% to the total number of tweets:</p>
 
 </div>
 </div>
@@ -12149,7 +12130,18 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Source-recommendation">Source recommendation<a class="anchor-link" href="#Source-recommendation">&#182;</a></h1>
+<h1 id="Reference-recommendation">Reference recommendation<a class="anchor-link" href="#Reference-recommendation">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+<pre><code>Recommended information source (16.4% of total references for this CWE): http://www.kb.cert.org/vuls/id/737740</code></pre>
+<p>Shown above is a reference recommendation, and this section shall give insight into the logical choices behind it. Initially, high hopes were put on the community-curated references from Twitter. Due to a small detail and little time at the end of the project, official NIST references were recommended instead.</p>
+
 </div>
 </div>
 </div>
@@ -12160,6 +12152,104 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <h2 id="Twitter-references">Twitter references<a class="anchor-link" href="#Twitter-references">&#182;</a></h2>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>All tweets referring to CVE-IDs from the <em>ghtorrent</em> database were crawled with a forked version of <a href="github.com/flxw/TweetScraper">TweetScraper</a>. From these tweets, a regular expression extracted every URL - an assumption that URLs posted with a CVE-ID represented a connection. Such a tweet and an embedded URL might look like the following:</p>
+
+</div>
+</div>
+</div><blockquote class="twitter-tweet" data-cards="hidden" data-lang="en"><p lang="en" dir="ltr">another talk about CVE-2015-1805 <a href="https://t.co/4JcyIC14SV">https://t.co/4JcyIC14SV</a></p>&mdash; Electric Wizard (@memcorrupt) <a href="https://twitter.com/memcorrupt/status/786136126050308096?ref_src=twsrc%5Etfw">October 12, 2016</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After extracting and connecting CVE-IDs to URLs, the domains were extracted from URLs in a second step. This was done to determine the popularity of a reference domain via aggregation. Unfortunately, the fact that most Twitter bots and Twitter itself use link shorteners, was missed. The aggregation was executed relatively late in the project, so there was not enough time left to perform a full URL resolution on 20000+ addresses.</p>
+<p>Even though no individual reference domains can be distinguished, the following bubble chart clearly shows an increasing number of tweets about vulnerabilities every year.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT *</span>
+<span class="s2">FROM (</span>
+<span class="s2">    SELECT ted.domain,</span>
+<span class="s2">           extract(year from t.timestamp) AS t_year,</span>
+<span class="s2">           SUM(t.retweet_count) AS rt_cnt,</span>
+<span class="s2">           SUM(t.favorite_count) AS fav_cnt,</span>
+<span class="s2">           COUNT(ted.domain) AS cnt </span>
+<span class="s2">    FROM view_cve_referring_tweets_extracted_domains ted </span>
+<span class="s2">    JOIN cve_referring_tweets t </span>
+<span class="s2">    ON t.id = ted.tweet_id </span>
+<span class="s2">    GROUP BY ted.domain, t_year </span>
+<span class="s2">    ORDER BY t_year DESC, cnt DESC </span>
+<span class="s2">) a </span>
+<span class="s2">WHERE cnt &gt; 500&quot;&quot;&quot;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">lyt</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Twitter 500+ reference sources by year and frequency&#39;</span><span class="p">,</span>
+    <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">margin</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Margin</span><span class="p">(</span>
+      <span class="n">l</span><span class="o">=</span><span class="mi">175</span>
+    <span class="p">),</span>
+    <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Year&quot;</span><span class="p">),</span>
+    <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Reference domain&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">t_year</span><span class="p">,</span>
+        <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
+        <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;markers&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">cnt</span><span class="p">,</span>
+            <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;showscale&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;colorscale&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;rgb(40,171,226)&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;rgb(247,146,58)&quot;</span><span class="p">]</span> <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">lyt</span><span class="p">)</span>
+<span class="n">py</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;twitter-source-cwe-popularity-bubble-chart&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[6]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~flxw/27.embed" height="500px" width="100%"></iframe>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12190,6 +12280,17 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Future-work">Future work<a class="anchor-link" href="#Future-work">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Unshortening the Twitter references, e.g. via Python and <a href="https://pypi.python.org/pypi/urlunshort/0.2.4">urlunshort</a></li>
+</ol>
+
 </div>
 </div>
 </div>
