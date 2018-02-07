@@ -11801,9 +11801,10 @@ $(document).ready(function(){
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This document explains the reasoning behind the technical solution implemented for the topic <em>Effects of high-profile incidents on code</em>. It first covers the application features, the data analysis and the logic leading to several implementation decisions, as well as the data structure inside the database. Furthermore it explains why the topical shift was made.</p>
+<p>The result of this project is a client-server application which scans the locally installed programs and libararies for known vulnerabilities registered at NIST. For the found vulnerabilities, promising references and experts on Twitter/GitHub are recommended.</p>
 <p>The code for this project can be found <a href="https://github.com/flxw/code-repository-mining">here</a>.
 The intermediate presentation slides can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Intermediate%20Presentation%20Felix%20Wolff.pdf">here</a>.
-The final presentation slides can be found here:</p>
+The final presentation slides can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>.</p>
 
 </div>
 </div>
@@ -12054,7 +12055,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <div class="cell border-box-sizing code_cell rendered">
 <a class="waves-effect waves-light btn">button</a>
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -12082,7 +12083,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
     <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Usernames&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">ratio</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">t_cwe_count</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">t_count</span>
+<span class="n">ratio</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">t_cwe_count</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">t_count</span> <span class="o">*</span> <span class="mi">100</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
@@ -12093,7 +12094,8 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
             <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">ratio</span><span class="p">,</span>
             <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
             <span class="s1">&#39;showscale&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;colorscale&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;rgb(40,171,226)&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;rgb(247,146,58)&quot;</span><span class="p">]</span> <span class="p">]</span>
+            <span class="s2">&quot;colorscale&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;rgb(40,171,226)&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;rgb(247,146,58)&quot;</span><span class="p">]</span> <span class="p">],</span>
+            <span class="s2">&quot;colorbar&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ticksuffix&quot;</span><span class="p">:</span><span class="s2">&quot;%&quot;</span><span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">]</span>
@@ -12112,7 +12114,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[33]:</div>
+<div class="prompt output_prompt">Out[20]:</div>
 
 
 
@@ -12263,9 +12265,88 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Data-sources">Data sources<a class="anchor-link" href="#Data-sources">&#182;</a></h1>
+<p>After determining that tweeted references were unfit for use for the time being, the official NIST references attached to each CVE were analyzed and found to be good for use. Since CVE-IDs are given away <a href="https://cve.mitre.org/cve/request_id.html">in blocks</a>, their registration timestamp may be earlier than the initial disclosure of the vulnerability. Because of this, a time-wise analysis would have been unclean.</p>
+<p>Looking at a topical distribution segmented by CWE-IDs instead, it becomes apparent that references usually come from certain sources in the case of a selected vulnerability type. The following figure depicts which ones provide more than a 25% share of the total number of references to a specific CWE-ID.</p>
+
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT *, nrefs/nrefstotal::float * 100 AS refshare</span>
+<span class="s2">FROM (</span>
+<span class="s2">    SELECT DISTINCT cr.domain,</span>
+<span class="s2">           cvecwe.cweid,</span>
+<span class="s2">           COUNT(cr.domain) OVER (PARTITION BY cvecwe.cweid) AS nrefstotal,</span>
+<span class="s2">           COUNT(cr.domain) OVER (PARTITION BY cr.domain, cvecwe.cweid) AS nrefs</span>
+<span class="s2">    FROM view_cvereference_extracted_domains cr </span>
+<span class="s2">    JOIN cve_cwe_classification cvecwe </span>
+<span class="s2">    ON cr.cveid = cvecwe.cveid </span>
+<span class="s2">    ORDER BY nrefs DESC</span>
+<span class="s2">) a</span>
+<span class="s2">WHERE nrefs/nrefstotal::float &gt; 0.25&quot;&quot;&quot;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">lyt</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;NIST reference sources by CWE and 25</span><span class="si">%+-s</span><span class="s1">hare of total CWE references&#39;</span><span class="p">,</span>
+    <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+    <span class="n">margin</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Margin</span><span class="p">(</span>
+      <span class="n">l</span><span class="o">=</span><span class="mi">175</span>
+    <span class="p">),</span>
+    <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;CWE-ID&quot;</span><span class="p">),</span>
+    <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Reference domain&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">cweid</span><span class="p">,</span>
+        <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
+        <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;markers&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">refshare</span><span class="p">,</span>
+            <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;showscale&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;colorscale&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;rgb(40,171,226)&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;rgb(247,146,58)&quot;</span><span class="p">]</span> <span class="p">],</span>
+            <span class="s2">&quot;colorbar&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ticksuffix&quot;</span><span class="p">:</span><span class="s2">&quot;%&quot;</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">lyt</span><span class="p">)</span>
+<span class="n">py</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;nist-reference-cwe-popularity-bubble-chart&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[19]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~flxw/23.embed" height="600px" width="100%"></iframe>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12279,6 +12360,15 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>The following diagrams depict how the views that are ultimately used in the application are composed out of different tables. The super-second response time of the application can be explained when looking at the cardinalities of each table and view.</p>
+
+</div>
+</div>
+</div><img src="/docs/source recommendation data structure.png" /><img src="/docs/user recommendation data structure.png" />
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Future-work">Future work<a class="anchor-link" href="#Future-work">&#182;</a></h1>
 </div>
 </div>
@@ -12287,8 +12377,16 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Some parts of the application still need work, especially run-time optimization. These work items are sorted from being considered easiest to hardest:</p>
 <ol>
-<li>Unshortening the Twitter references, e.g. via Python and <a href="https://pypi.python.org/pypi/urlunshort/0.2.4">urlunshort</a></li>
+<li>Introduce indices to speed up certain lookups and joins
+ a. Keep an index on CVE-IDs that also have a CWE-ID</li>
+<li>Rewrite views to speed up and reduce the number of joins</li>
+<li>Unshorten the Twitter references, e.g. via Python and <a href="https://pypi.python.org/pypi/urlunshort/0.2.4">urlunshort</a></li>
+<li>Implement easy updating of both cve-search and Twitter information without intermediary saving with cve-search</li>
+<li>Implement version matching inside a SQL (for details see <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>)</li>
+<li>Implement a reliable product matching heuristic  (for details see <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>)</li>
+<li>Implement the system as a notification service. Right now, the application scans the users system completely every time it is invoked. There is merit to the idea of saving the system configuration on the server side, and reacting to vulnerabilities as they are released.</li>
 </ol>
 
 </div>
@@ -12301,6 +12399,95 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <h1 id="Justification-of-topic-adaption">Justification of topic adaption<a class="anchor-link" href="#Justification-of-topic-adaption">&#182;</a></h1>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The initial research question was titled <em>Effects of High-profile Incidents on Code</em> and described as such</p>
+<ul>
+<li>Incidents with widespread media coverage (e.g. Apple "goto fail" bug, Heartbleed, Loss of Space Missions, …) often result from mistakes that could have been avoided by strictly following best practices.</li>
+<li>Goal: Find out if such incidents have large-scale effects on code quality (e.g. "goto fail" causing increased use of curly braces in single-line if-blocks across GitHub)</li>
+</ul>
+<p>Continuing the example, the goto-fail bug is identified as <strong>CVE-2014-1266</strong> and this bug is being referenced <em>two times</em> in the entire ghtorrent commit history. The initial assumption was that programmers learn from these bugs and change their programming style to be more defensive. Instead, one of the two commit messages (the other one is a gcc merge commit) reads:</p>
+
+<pre><code>Makefile.in: add -Wunreachable-code
+
+I was reading about the CVE-2014-1266 SSL/TLS Apple bug on
+ImperialViolet and learnt that clang has a separate flag for
+unreachable code, -Wunreachable-code, that is not included
+in the -Wall warnings [1].
+
+So, let's add -Wunreachable-code to Makefile.in.
+
+[1] https://www.imperialviolet.org/2014/02/22/applebug.html</code></pre>
+<p>As most of the bugs that receive a lot of media attention are a <a href="https://en.wikipedia.org/wiki/List_of_software_bugs">mix of bad logic and human error</a>. Practically no bug can be attributed to a simple programming error such as in the case of goto-fail, and without context it is hard to find out whether such behavior was not intended.</p>
+<p>This lead us to move away from looking at high-profile code incidents and focus on registered ones. CVE-IDs are being referenced more and more across GitHub, showing the growing awareness for security vulnerabilities - evidenced by the graph below.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<a class="waves-effect waves-light btn">button</a>
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.plotly</span> <span class="k">as</span> <span class="nn">ply</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT a.date, a.shacount/b.shacount::float AS shacount</span>
+<span class="s2">FROM (</span>
+<span class="s2">    SELECT DATE(timestamp) as date, COUNT(sha) AS shacount</span>
+<span class="s2">    FROM view_commit_data_search_for_cve</span>
+<span class="s2">    GROUP BY date</span>
+<span class="s2">    ORDER BY date</span>
+<span class="s2">) a</span>
+<span class="s2">INNER JOIN</span>
+<span class="s2">view_commit_data_commits_per_day b</span>
+<span class="s2">ON a.date = b.date</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+
+<span class="n">ply</span><span class="o">.</span><span class="n">iplot</span><span class="p">({</span>
+    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">shacount</span><span class="p">,</span>
+                  <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;rgb(40,171,226)&#39;</span><span class="p">)))</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;layout&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s2">&quot;Adjusted reactions to CVE entries over time&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;xaxis&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2012-01-01&#39;</span><span class="p">,</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">],</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Year&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;yaxis&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.003</span><span class="p">],</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Percentage of total commits on a given day&#39;</span><span class="p">,</span> <span class="s1">&#39;tickformat&#39;</span><span class="p">:</span> <span class="s1">&#39;.2%&#39;</span><span class="p">}</span>
+    <span class="p">}},</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;cve-reactions-adjusted-over-time&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[21]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~flxw/19.embed" height="525px" width="100%"></iframe>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     </div>
   </div>
