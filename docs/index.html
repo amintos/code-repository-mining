@@ -11798,7 +11798,7 @@ $(document).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This document serves as the starting point into the documentation of the accomplishments of this semester. It explains the reasoning behind the technical solution implemented for the topic <em>Effects of high-profile incidents on code</em>. It first covers the application itself, its features, the data analysis and the logic leading to several implementation decisions, as well as the data structure inside the database. Furthermore it explains why the topical shift was made.</p>
+<p>This document serves as the starting point into the documentation of the accomplishments of this semester. It explains the reasoning behind the technical solution implemented for the topic <em>Effects of high-profile incidents on code</em>. It first covers the application and its features. The following contents are about the data analysis and the logic leading to several implementation decisions. The data structure and the incurred computing load inside the database is outlined then. The topical shift away from the original topic is explained at the close of this chapter.</p>
 <p>The result of this project is a client-server application which scans the locally installed programs and libararies for known vulnerabilities registered at NIST. For the found vulnerabilities, promising references and experts on Twitter/GitHub are recommended.</p>
 <p>The code for this project can be found <a href="https://github.com/flxw/code-repository-mining">here</a>.
 The intermediate presentation slides can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Intermediate%20Presentation%20Felix%20Wolff.pdf">here</a>.
@@ -11854,7 +11854,7 @@ The final presentation slides (going into technical detail and code) can be foun
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Motivation">Motivation<a class="anchor-link" href="#Motivation">&#182;</a></h1><p>When the <a href="http://heartbleed.com/">Heartbleed bug</a> was published on April 1st, 2014, many SSL-secured websites were suddenly open to attack. A fix was published on April 7th.</p>
+<h1 id="A-motivational-introduction">A motivational introduction<a class="anchor-link" href="#A-motivational-introduction">&#182;</a></h1><p>When the <a href="http://heartbleed.com/">Heartbleed bug</a> was published on April 1st, 2014, many SSL-secured websites were suddenly open to attack. A fix was published on April 7th.</p>
 <p>On April 8th, data was <a href="https://en.wikipedia.org/wiki/Heartbleed#Exploitation">stolen from the Canada Revenue Agency</a> by exploiting Heartbleed. An unfortunate incident that would have been avoidable.</p>
 <p>Had the systems administrators known about this vulnerability, this might not have happened. The following section shall introduce a tool that would have come in handy in this situation - a tool able to detect system vulnerabilities and give helpful pointers.</p>
 
@@ -11865,22 +11865,14 @@ The final presentation slides (going into technical detail and code) can be foun
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-technical-solution">The technical solution<a class="anchor-link" href="#The-technical-solution">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Upon running <code>client/checksystem.py</code>, all packages installed via the distribution-default package manager are checked for known weaknesses. For every weakness found, a block of information is printed as follows:</p>
+<p>A prototypical implementation of this tool is the script <code>client/checksystem.py</code>. Upon execution, all packages installed via the distribution-default package manager are checked for known weaknesses. Grouped by package it puts out a block of information for every weakness that is found. This might look like the following:</p>
 
 <pre><code>CVE-2013-0166 released on Friday 08. February 2013
 OpenSSL before 0.9.8y, 1.0.0 before 1.0.0k, and 1.0.1 before 1.0.1d does not properly perform signature verification for OCSP responses, which allows remote OCSP servers to cause a denial of service (NULL pointer dereference and application crash) via an invalid key.
 Official NIST entry: https://nvd.nist.gov/vuln/detail/CVE-2013-0166
 Recommended information source (16.4% of total references for this CWE): http://www.kb.cert.org/vuls/id/737740
 A knowledgeable Twitter and Github user might be: https://github.com/delphij - as 91.5% of his posts are on this kind of CWE</code></pre>
-<p>Line by line this reveals the following information:</p>
+<p>Line by line this block reveals the following information:</p>
 <ol>
 <li>The <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">CVE-ID</a> and its publishing date</li>
 <li>A brief description of the vulnerability, also taken from the National Institute for Standards and Technology (NIST)</li>
@@ -12167,7 +12159,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>All tweets referring to CVE-IDs from the <em>ghtorrent</em> database were crawled with a forked version of <a href="github.com/flxw/TweetScraper">TweetScraper</a>. From these tweets, a regular expression extracted every URL - an assumption that URLs posted with a CVE-ID represented a connection. Such a tweet and an embedded URL might look like the following:</p>
+<p>All tweets referring to CVE-IDs from the <em>ghtorrent</em> database were crawled with a forked version of <a href="github.com/flxw/TweetScraper">TweetScraper</a>. From these tweets, a regular expression extracted every URL - an assumption that URLs posted with a CVE-ID represented a connection. Such a tweet with an embedded URL might look like the following:</p>
 
 </div>
 </div>
@@ -12372,7 +12364,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 
 </div>
 </div>
-</div><img class="materialboxed" width="650" src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/source%20recommendation%20data%20structure.png" /><img class="materialboxed" width="650" src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/user%20recommendation%20data%20structure.png" />
+</div><div class="material-placeholder"><img class="materialboxed" width="650" src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/source%20recommendation%20data%20structure.png" /></div><img class="materialboxed" width="650" src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/user%20recommendation%20data%20structure.png" />
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12396,6 +12388,12 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <li>Implement a reliable product matching heuristic  (for details see <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>)</li>
 <li>Implement the system as a notification service. Right now, the application scans the users system completely every time it is invoked. There is merit to the idea of saving the system configuration on the server side, and reacting to vulnerabilities as they are released. Centralized saving of information that can reveal security vulnerabilities is unwise, which could be mitigated via running stubs of the database on each client. An alternative and easier approach might be a client that continously polls for vulnerability updates.</li>
 </ol>
+<p>Apart from the application, the collected data offers further potential for answering further questions:</p>
+<ul>
+<li>What vulnerabilities are common for what type of application? What would be a good thing to know about when trying to develop such a piece of software?</li>
+<li>What vulnerabilities are common for which programming language? This might be used as input by application developers.</li>
+<li>Which people on GitHub or Twitter usually react the fastest after the disclosure of a vulnerability? These first-movers advantages could be used in the user recommendation ranking.</li>
+</ul>
 
 </div>
 </div>
