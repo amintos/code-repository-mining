@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Automatically detecting security-relevant system weaknesses</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<title>Automatically detecting security-relevant system weaknesses</title>
+
+
 
 <style type="text/css">
     /*!
@@ -11746,17 +11747,7 @@ div#notebook {
 <link rel="stylesheet" href="custom.css">
 <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:100" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
-<script>
-$(document).ready(function(){
-  $('.btn').click(function() {
-    $(this).parent().parent().parent().find("div.input").slideToggle(500)
-  })
-
-  $('div.input').hide()
-})
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -12501,5 +12492,17 @@ So, let's add -Wunreachable-code to Makefile.in.
 
  
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
+<script>
+$(document).ready(function(){
+  $('.btn').click(function() {
+    $(this).parent().parent().parent().find("div.input").slideToggle(500)
+  })
+
+  $('div.input').hide()
+})
+</script>
 </html>
