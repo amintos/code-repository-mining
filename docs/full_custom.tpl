@@ -8,7 +8,7 @@
 <head>
 {%- block html_head -%}
 <meta charset="utf-8" />
-<title>{{resources['metadata']['name']}}</title>
+<title>Automatically detecting security-relevant system weaknesses</title>
 
 {%- if "widgets" in nb.metadata -%}
 <script src="https://unpkg.com/jupyter-js-widgets@2.0.*/dist/embed.js"></script>
@@ -66,7 +66,7 @@ div#notebook-container{
 <script>
 $(document).ready(function(){
   $('.btn').click(function() {
-    $(this).parent().parent().parent().find("div.input").toggle(500)
+    $(this).parent().parent().parent().find("div.input").slideToggle(500)
   })
 
   $('div.input').hide()

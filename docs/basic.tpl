@@ -8,7 +8,7 @@
 {%- endblock codecell %}
 
 {% block input_group -%}
-<a class="waves-effect waves-light btn">button</a>
+<div class="waves-effect waves-light btn light-blue lighten-1">Toggle code display</div>
 <div class="input">
 {{ super() }}
 </div>

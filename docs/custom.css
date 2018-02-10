@@ -6,8 +6,13 @@ div#notebook-container h2 {
   font-family: 'Roboto', sans-serif;
   color: #28abe2;
 }
-div#notebook-container p {
+div#notebook-container p,
+div#notebook-container ul,
+div#notebook-container ol {
   font-family: 'Raleway', sans-serif;
+}
+div#notebook-container ul {
+  list-style-type: disc;
 }
 .prompt {
   display: none;
