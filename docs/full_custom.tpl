@@ -10,12 +10,7 @@
 <meta charset="utf-8" />
 <title>Automatically detecting security-relevant system weaknesses</title>
 
-{%- if "widgets" in nb.metadata -%}
-<script src="https://unpkg.com/jupyter-js-widgets@2.0.*/dist/embed.js"></script>
-{%- endif-%}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 {% for css in resources.inlining.css -%}
     <style type="text/css">
@@ -61,17 +56,7 @@ div#notebook-container{
 <link rel="stylesheet" href="custom.css">
 <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:100" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
-<script>
-$(document).ready(function(){
-  $('.btn').click(function() {
-    $(this).parent().parent().parent().find("div.input").slideToggle(500)
-  })
-
-  $('div.input').hide()
-})
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <!-- Loading mathjax macro -->
 {{ mathjax() }}
@@ -91,5 +76,21 @@ $(document).ready(function(){
 
 {% block footer %}
 {{ super() }}
+{%- if "widgets" in nb.metadata -%}
+<script src="https://unpkg.com/jupyter-js-widgets@2.0.*/dist/embed.js"></script>
+{%- endif-%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $('.btn').click(function() {
+    $(this).parent().parent().parent().find("div.input").slideToggle(500)
+  })
+
+  $('div.input').hide()
+})
+</script>
 </html>
 {% endblock footer %}

@@ -12,7 +12,11 @@ div#notebook-container ol {
   font-family: 'Raleway', sans-serif;
 }
 div#notebook-container ul {
-  list-style-type: disc;
+  list-style-type: disc !important;
+}
+div#notebook-container img {
+  width: 80%;
+  margin: 0 auto;
 }
 .prompt {
   display: none;
