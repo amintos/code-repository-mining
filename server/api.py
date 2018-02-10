@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# This file belongs to the client application of github.com/flxw/code-repository-mining
+# It contains the API for the server. Make sure to install the dependencies via pip and
+# follow the setup guid in README.md at the repository root
+# Execute this file via 'hug -f api.py'
 
 import platform
 import requests
@@ -8,7 +12,6 @@ import sys
 
 from cpe           import CPE
 from pprint        import pprint
-from pymongo       import MongoClient
 from pkg_resources import parse_version
 
 import hug

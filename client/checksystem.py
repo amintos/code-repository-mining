@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# This file belongs to the client application of github.com/flxw/code-repository-mining
+# This is the client-side script. Install the dependencies via pip and make sure the connection to HPI VPN is working
 
 import requests
 import sys
@@ -23,7 +25,6 @@ def get_and_parse_json(pkg):
   r = requests.get(api_url, pkg)
   return r.json()
 
-# TODO clean this up
 package_list = []
 if sys.argv[1] != "--test":
   package_list = platformpackages.get_package_list()

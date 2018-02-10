@@ -1,3 +1,4 @@
+-- extracts domains from CVE references
 DROP MATERIALIZED VIEW IF EXISTS view_cvereference_extracted_domains;
 CREATE MATERIALIZED VIEW view_cvereference_extracted_domains AS
 SELECT

@@ -1,4 +1,5 @@
 -- create a function that can help eliminating bad timestamps first
+-- useful, since some dates are in a bad format inside the database
 CREATE FUNCTION is_timestamp_valid(text) returns boolean language plpgsql immutable AS
 $$
 BEGIN

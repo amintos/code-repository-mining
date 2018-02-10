@@ -1,5 +1,6 @@
+-- create the view that is used for recommending a twitter/github user inside the application
+-- the sole reason for its existence here is speed
 DROP MATERIALIZED VIEW IF EXISTS view_twitter_user_ranking;
-
 CREATE MATERIALIZED VIEW view_twitter_user_ranking AS
 SELECT
     DISTINCT t.username,

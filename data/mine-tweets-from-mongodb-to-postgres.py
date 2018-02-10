@@ -2,6 +2,7 @@
 
 # this script should be run AFTER the tweets have been crawled and
 # thus a TweetScraper collection exists in MongoDB
+# LEGACY - since TweetScraper has PostgreSQL saving capability it should not be needed anymore
 
 import config
 import psycopg2

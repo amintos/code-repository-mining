@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Automatically detecting security-relevant system weaknesses</title>
-
-
+<title>Automatically detecting security-relevant system weaknesses</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
     /*!
@@ -11747,7 +11746,17 @@ div#notebook {
 <link rel="stylesheet" href="custom.css">
 <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:100" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $('.btn').click(function() {
+    $(this).parent().parent().parent().find("div.input").slideToggle(500)
+  })
+
+  $('div.input').hide()
+})
+</script>
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -11793,7 +11802,7 @@ div#notebook {
 <p>The result of this project is a client-server application which scans the locally installed programs and libararies for known vulnerabilities registered at NIST. For the found vulnerabilities, promising references and experts on Twitter/GitHub are recommended.</p>
 <p>The code for this project can be found <a href="https://github.com/flxw/code-repository-mining">here</a>.
 The intermediate presentation slides can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Intermediate%20Presentation%20Felix%20Wolff.pdf">here</a>.
-The final presentation slides (going into technical detail and code) can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>.</p>
+The final presentation slides (going into technical detail and code) can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>. The graphs are created using <a href="https://plot.ly">plotly</a> and encourage interactive exploration!</p>
 
 </div>
 </div>
@@ -11856,6 +11865,14 @@ The final presentation slides (going into technical detail and code) can be foun
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="The-technical-solution">The technical solution<a class="anchor-link" href="#The-technical-solution">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>A prototypical implementation of this tool is the script <code>client/checksystem.py</code>. Upon execution, all packages installed via the distribution-default package manager are checked for known weaknesses. Grouped by package it puts out a block of information for every weakness that is found. This might look like the following:</p>
 
 <pre><code>CVE-2013-0166 released on Friday 08. February 2013
@@ -11871,7 +11888,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <li>An information source which might be helpful to the user</li>
 <li>A person who is both active on Github and Twitter in the domain of cybersecurity and who might be of assistance in the domain of the CVEs type, the <a href="https://cwe.mitre.org/about/">CWE</a>. He or she might be willing to offer consulting services.</li>
 </ol>
-<p>This application offers a huge improvement over the <a href="https://nvd.nist.gov/vuln/search">complicated search form at NIST</a>. Furthermore it contributes to the trend of automatic vulnerability detection systems, as made evident by <a href="https://jfrog.com/xray/">JFrogs XRay</a> and GitHubs <a href="https://github.com/blog/2470-introducing-security-alerts-on-github">recent addition to its data services</a>.</p>
+<p>This application offers a huge improvement over the <a href="https://nvd.nist.gov/vuln/search">complicated search form at NIST</a>. Furthermore it contributes to the trend of automatic vulnerability detection systems, as made evident by <a href="https://jfrog.com/xray/">JFrogs XRay</a> and GitHubs <a href="https://github.com/blog/2470-introducing-security-alerts-on-github">recent addition to its data services</a>. As described in the <a href="https://github.com/flxw/code-repository-mining/blob/master/README.md">repository</a>, the client has a demo mode for faster execution.</p>
 
 </div>
 </div>
@@ -11927,6 +11944,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </tr>
 </tbody>
 </table>
+<p>On the client side, the package information is extracted from the Linux distribution-default package manager. Attention was paid to make this process easily expandable to other operating systems. A brief addition to this <a href="https://github.com/flxw/code-repository-mining/blob/master/client/platformpackages.py">file</a> can expand the number of supported systems..</p>
 
 </div>
 </div>
@@ -11943,7 +11961,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to recommend a person from the plethora of Twitter and GitHub users who might be an expert on a software error, several criteria were introduced:</p>
+<p>In order to recommend a person from the plethora of Twitter and GitHub users who might be an expert on a family of software errors, several criteria were introduced:</p>
 <ol>
 <li>The user uses the same name in both GitHub and Twitter.</li>
 <li>The user has tweeted about the same CWE as the current CVE in question. (I.e. he knows this type of vulnerability)</li>
@@ -12133,7 +12151,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <div class="text_cell_render border-box-sizing rendered_html">
 
 <pre><code>Recommended information source (16.4% of total references for this CWE): http://www.kb.cert.org/vuls/id/737740</code></pre>
-<p>Shown above is a reference recommendation, and this section shall give insight into the logical choices behind it. Initially, high hopes were put on the community-curated references from Twitter. Due to a small detail and little time at the end of the project, official NIST references were recommended instead.</p>
+<p>Shown above is a reference recommendation, and this section shall give insight into the logical choices behind it. Initially, high hopes were put on the community-curated references from Twitter. The following section will also explain why official NIST references were recommended instead.</p>
 
 </div>
 </div>
@@ -12256,7 +12274,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>After determining that tweeted references were unfit for use for the time being, the official NIST references attached to each CVE were analyzed and found to be good for use. Since CVE-IDs are given away <a href="https://cve.mitre.org/cve/request_id.html">in blocks</a>, their registration timestamp may be earlier than the initial disclosure of the vulnerability. Because of this, a time-wise analysis would have been unclean.</p>
+<p>Having determined that tweeted references were unfit for use until processed further, the official NIST references attached to each CVE were analyzed and found to be good for recommendation. Since CVE-IDs are given away <a href="https://cve.mitre.org/cve/request_id.html">in blocks</a>, their registration timestamp may be earlier than the initial disclosure of the vulnerability. Because of this, a time-wise analysis would have been unclean.</p>
 <p>Looking at a topical distribution segmented by CWE-IDs instead, it becomes apparent that references usually come from certain sources in the case of a selected vulnerability type. The following figure depicts which ones provide more than a 25% share of the total number of references to a specific CWE-ID.</p>
 
 </div>
@@ -12351,7 +12369,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The following diagrams depict how the views that are ultimately used in the application are composed out of different tables. The super-second response time of the application can be explained when looking at the cardinalities of each table and view.</p>
+<p>The following diagrams depict how the views that are ultimately used in the application are composed out of different tables. The super-second response time of the application can be explained when looking at the cardinalities of each table and view. All of the views encapsule long-running queries (5min to 2hours with the current cardinalities). Nonetheless, there exists potential for optimization via indices and view expansion with attributes.</p>
 
 </div>
 </div>
@@ -12492,17 +12510,5 @@ So, let's add -Wunreachable-code to Makefile.in.
 
  
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-<script>
-$(document).ready(function(){
-  $('.btn').click(function() {
-    $(this).parent().parent().parent().find("div.input").slideToggle(500)
-  })
-
-  $('div.input').hide()
-})
-</script>
 </html>

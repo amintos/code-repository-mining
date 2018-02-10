@@ -1,3 +1,4 @@
+-- create the ranking that is used to recommend references
 DROP MATERIALIZED VIEW IF EXISTS view_nist_reference_cwe_ranking;
 
 CREATE MATERIALIZED VIEW view_nist_reference_cwe_ranking AS

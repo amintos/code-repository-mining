@@ -1,3 +1,5 @@
+# This file belongs to the client application of github.com/flxw/code-repository-mining
+# It encapsulates the platform differences when querying the installed software
 import platform
 
 distro = platform.linux_distribution()

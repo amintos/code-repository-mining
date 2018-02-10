@@ -1,6 +1,5 @@
+-- collect all CVEs mentioned in tweets and create a mapping between them
 DROP MATERIALIZED VIEW IF EXISTS view_cve_referring_tweets_extracted_cves;
-DROP MATERIALIZED VIEW IF EXISTS view_cve_referring_tweets_extracted_domains;
-
 CREATE MATERIALIZED VIEW view_cve_referring_tweets_extracted_cves AS
 SELECT
   id AS tweet_id,
@@ -8,6 +7,8 @@ SELECT
 FROM cve_referring_tweets
 WITH DATA;
 
+-- collect the domains of the links posted for CVEs and create a mapping between domain and tweet ID
+DROP MATERIALIZED VIEW IF EXISTS view_cve_referring_tweets_extracted_domains;
 CREATE MATERIALIZED VIEW view_cve_referring_tweets_extracted_domains AS
 SELECT
   id AS tweet_id,
