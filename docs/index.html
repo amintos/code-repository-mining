@@ -11802,7 +11802,7 @@ $(document).ready(function(){
 <p>The result of this project is a client-server application which scans the locally installed programs and libararies for known vulnerabilities registered at NIST. For the found vulnerabilities, promising references and experts on Twitter/GitHub are recommended.</p>
 <p>The code for this project can be found <a href="https://github.com/flxw/code-repository-mining">here</a>.
 The intermediate presentation slides can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Intermediate%20Presentation%20Felix%20Wolff.pdf">here</a>.
-The final presentation slides (going into technical detail and code) can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>. The graphs are created using <a href="https://plot.ly">plotly</a> and encourage interactive exploration!</p>
+The final presentation slides (going into technical detail and code) can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>. The graphs are created using <a href="https://plot.ly">plotly</a> and encourage interactive exploration! The queries used to create the graphs may be revealed by clicking a button, such as the one below.</p>
 
 </div>
 </div>
@@ -11856,7 +11856,7 @@ The final presentation slides (going into technical detail and code) can be foun
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="A-motivational-introduction">A motivational introduction<a class="anchor-link" href="#A-motivational-introduction">&#182;</a></h1><p>When the <a href="http://heartbleed.com/">Heartbleed bug</a> was published on April 1st, 2014, many SSL-secured websites were suddenly open to attack. A fix was published on April 7th.</p>
 <p>On April 8th, data was <a href="https://en.wikipedia.org/wiki/Heartbleed#Exploitation">stolen from the Canada Revenue Agency</a> by exploiting Heartbleed. An unfortunate incident that would have been avoidable.</p>
-<p>Had the systems administrators known about this vulnerability, this might not have happened. The following section shall introduce a tool that would have come in handy in this situation - a tool able to detect system vulnerabilities and give helpful pointers.</p>
+<p>Had the systems administrators known about this vulnerability, this might not have happened. The following section shall introduce a tool that would have come in handy in this situation - a tool for detecting system vulnerabilities and give helpful pointers.</p>
 
 </div>
 </div>
@@ -12419,12 +12419,12 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The initial research question was titled <em>Effects of High-profile Incidents on Code</em> and described as such</p>
+<p>The initial research question was titled <em>Effects of High-profile Incidents on Code</em> and described as follows:</p>
 <ul>
 <li>Incidents with widespread media coverage (e.g. Apple "goto fail" bug, Heartbleed, Loss of Space Missions, …) often result from mistakes that could have been avoided by strictly following best practices.</li>
 <li>Goal: Find out if such incidents have large-scale effects on code quality (e.g. "goto fail" causing increased use of curly braces in single-line if-blocks across GitHub)</li>
 </ul>
-<p>Continuing the example, the goto-fail bug is identified as <strong>CVE-2014-1266</strong> and this bug is being referenced <em>two times</em> in the entire ghtorrent commit history. The initial assumption was that programmers learn from these bugs and change their programming style to be more defensive. Instead, one of the two commit messages (the other one is a gcc merge commit) reads:</p>
+<p>Continuing the example, the goto-fail bug is identified as <strong>CVE-2014-1266</strong> and this bug is being referenced <em>two times</em> in the entire ghtorrent commit history. The initial assumption was that programmers learn from these bugs and change their programming style to be more defensive. Ironically, one of the two commit messages (the other one is a gcc merge commit) read this instead:</p>
 
 <pre><code>Makefile.in: add -Wunreachable-code
 
@@ -12436,7 +12436,7 @@ in the -Wall warnings [1].
 So, let's add -Wunreachable-code to Makefile.in.
 
 [1] https://www.imperialviolet.org/2014/02/22/applebug.html</code></pre>
-<p>As most of the bugs that receive a lot of media attention are a <a href="https://en.wikipedia.org/wiki/List_of_software_bugs">mix of bad logic and human error</a>. Practically no bug can be attributed to a simple programming error such as in the case of goto-fail, and without context it is hard to find out whether such behavior was not intended.</p>
+<p>Also, most of the bugs that receive a lot of media attention are a <a href="https://en.wikipedia.org/wiki/List_of_software_bugs">mix of bad design and human error</a>. Practically no other bug can be attributed to a simple programming error as in the case of goto-fail. Without context it is hard to find out whether such behavior was not intended.</p>
 <p>This lead us to move away from looking at high-profile code incidents and focus on registered ones. CVE-IDs are being referenced more and more across GitHub, showing the growing awareness for security vulnerabilities - evidenced by the graph below.</p>
 
 </div>
