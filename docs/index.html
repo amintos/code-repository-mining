@@ -11788,10 +11788,8 @@ $(document).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Automatically-detecting-security-relevant-system-weaknesses">Automatically detecting security-relevant system weaknesses<a class="anchor-link" href="#Automatically-detecting-security-relevant-system-weaknesses">&#182;</a></h1>
-<pre><code>                         &lt;div style="text-align: right"&gt;-- handed in by Felix Wolff | 765508&lt;/div&gt;
-                         *Code Repository Mining* seminar at Hasso-Plattner-Institute
-                         winter term 2017/2018</code></pre>
+<h1 id="Automatically-detecting-security-relevant-system-weaknesses">Automatically detecting security-relevant system weaknesses<a class="anchor-link" href="#Automatically-detecting-security-relevant-system-weaknesses">&#182;</a></h1><p>by Felix Wolff | 765508 | winter term 2017/2018</p>
+<p><em>Code Repository Mining</em> seminar at Hasso-Plattner-Institute</p>
 
 </div>
 </div>
@@ -11800,11 +11798,11 @@ $(document).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This document explains the reasoning behind the technical solution implemented for the topic <em>Effects of high-profile incidents on code</em>. It first covers the application features, the data analysis and the logic leading to several implementation decisions, as well as the data structure inside the database. Furthermore it explains why the topical shift was made.</p>
+<p>This document serves as the starting point into the documentation of the accomplishments of this semester. It explains the reasoning behind the technical solution implemented for the topic <em>Effects of high-profile incidents on code</em>. It first covers the application itself, its features, the data analysis and the logic leading to several implementation decisions, as well as the data structure inside the database. Furthermore it explains why the topical shift was made.</p>
 <p>The result of this project is a client-server application which scans the locally installed programs and libararies for known vulnerabilities registered at NIST. For the found vulnerabilities, promising references and experts on Twitter/GitHub are recommended.</p>
 <p>The code for this project can be found <a href="https://github.com/flxw/code-repository-mining">here</a>.
 The intermediate presentation slides can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Intermediate%20Presentation%20Felix%20Wolff.pdf">here</a>.
-The final presentation slides can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>.</p>
+The final presentation slides (going into technical detail and code) can be found <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>.</p>
 
 </div>
 </div>
@@ -11856,6 +11854,17 @@ The final presentation slides can be found <a href="https://github.com/flxw/code
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Motivation">Motivation<a class="anchor-link" href="#Motivation">&#182;</a></h1><p>When the <a href="http://heartbleed.com/">Heartbleed bug</a> was published on April 1st, 2014, many SSL-secured websites were suddenly open to attack. A fix was published on April 7th.</p>
+<p>On April 8th, data was <a href="https://en.wikipedia.org/wiki/Heartbleed#Exploitation">stolen from the Canada Revenue Agency</a> by exploiting Heartbleed. An unfortunate incident that would have been avoidable.</p>
+<p>Had the systems administrators known about this vulnerability, this might not have happened. The following section shall introduce a tool that would have come in handy in this situation - a tool able to detect system vulnerabilities and give helpful pointers.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="The-technical-solution">The technical solution<a class="anchor-link" href="#The-technical-solution">&#182;</a></h1>
 </div>
 </div>
@@ -11864,7 +11873,7 @@ The final presentation slides can be found <a href="https://github.com/flxw/code
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Upon running the script <code>client/checksystem.py</code>, all packages installed via the distribution-default package manager are checked for known weaknesses. For every weakness found, a block of information is printed as follows:</p>
+<p>Upon running <code>client/checksystem.py</code>, all packages installed via the distribution-default package manager are checked for known weaknesses. For every weakness found, a block of information is printed as follows:</p>
 
 <pre><code>CVE-2013-0166 released on Friday 08. February 2013
 OpenSSL before 0.9.8y, 1.0.0 before 1.0.0k, and 1.0.1 before 1.0.1d does not properly perform signature verification for OCSP responses, which allows remote OCSP servers to cause a denial of service (NULL pointer dereference and application crash) via an invalid key.
@@ -11873,14 +11882,13 @@ Recommended information source (16.4% of total references for this CWE): http://
 A knowledgeable Twitter and Github user might be: https://github.com/delphij - as 91.5% of his posts are on this kind of CWE</code></pre>
 <p>Line by line this reveals the following information:</p>
 <ol>
-<li>The CVE-ID (for a refresher read <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">Wikipeda</a>) and its publishing date</li>
+<li>The <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">CVE-ID</a> and its publishing date</li>
 <li>A brief description of the vulnerability, also taken from the National Institute for Standards and Technology (NIST)</li>
 <li>The official NIST database link</li>
-<li>An information source which is probably of good help to the user</li>
-<li>A person who is both active on Github and Twitter in the domain of cybersecurity and who might be of assistance. The tweets are being segmented by <a href="https://cwe.mitre.org/about/">CWEs</a>.</li>
+<li>An information source which might be helpful to the user</li>
+<li>A person who is both active on Github and Twitter in the domain of cybersecurity and who might be of assistance in the domain of the CVEs type, the <a href="https://cwe.mitre.org/about/">CWE</a>. He or she might be willing to offer consulting services.</li>
 </ol>
 <p>This application offers a huge improvement over the <a href="https://nvd.nist.gov/vuln/search">complicated search form at NIST</a>. Furthermore it contributes to the trend of automatic vulnerability detection systems, as made evident by <a href="https://jfrog.com/xray/">JFrogs XRay</a> and GitHubs <a href="https://github.com/blog/2470-introducing-security-alerts-on-github">recent addition to its data services</a>.</p>
-<p>After an explanation of the dataset, the logic behind the information items 4 and 5 shall be described in detail.</p>
 
 </div>
 </div>
@@ -12272,7 +12280,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<a class="waves-effect waves-light btn">button</a>
+<div class="waves-effect waves-light btn light-blue lighten-1">Toggle code display</div>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
@@ -12364,7 +12372,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 
 </div>
 </div>
-</div><img src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/source%20recommendation%20data%20structure.png" /><img src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/user%20recommendation%20data%20structure.png" />
+</div><img class="materialboxed" width="650" src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/source%20recommendation%20data%20structure.png" /><img class="materialboxed" width="650" src="https://raw.githubusercontent.com/flxw/code-repository-mining/master/docs/user%20recommendation%20data%20structure.png" />
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12386,7 +12394,7 @@ A knowledgeable Twitter and Github user might be: https://github.com/delphij - a
 <li>Implement easy updating of both cve-search and Twitter information without intermediary saving with cve-search</li>
 <li>Implement version matching inside a SQL (for details see <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>)</li>
 <li>Implement a reliable product matching heuristic  (for details see <a href="https://github.com/flxw/code-repository-mining/blob/master/docs/CRM%20Final%20Presentation%20Felix%20Wolff.pdf">here</a>)</li>
-<li>Implement the system as a notification service. Right now, the application scans the users system completely every time it is invoked. There is merit to the idea of saving the system configuration on the server side, and reacting to vulnerabilities as they are released.</li>
+<li>Implement the system as a notification service. Right now, the application scans the users system completely every time it is invoked. There is merit to the idea of saving the system configuration on the server side, and reacting to vulnerabilities as they are released. Centralized saving of information that can reveal security vulnerabilities is unwise, which could be mitigated via running stubs of the database on each client. An alternative and easier approach might be a client that continously polls for vulnerability updates.</li>
 </ol>
 
 </div>
@@ -12428,7 +12436,7 @@ So, let's add -Wunreachable-code to Makefile.in.
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<a class="waves-effect waves-light btn">button</a>
+<div class="waves-effect waves-light btn light-blue lighten-1">Toggle code display</div>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
