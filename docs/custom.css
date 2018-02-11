@@ -11,7 +11,7 @@ div#notebook-container ul,
 div#notebook-container ol {
   font-family: 'Raleway', sans-serif;
 }
-div#notebook-container ul {
+div#notebook-container ul > li {
   list-style-type: disc !important;
 }
 div#notebook-container img {
